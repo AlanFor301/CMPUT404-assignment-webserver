@@ -50,6 +50,7 @@ class MyWebServer(SocketServer.BaseRequestHandler):
         elif url[0] == '/' and url[-1] == '/':
             
             new_file = os.getcwd() + "/www" + url + "index.html"
+	#fix css reading problem
         elif 'css' in url and 'deep' in url:
 	    new_file = os.getcwd() + "/www/deep/deep.css"
         else:
