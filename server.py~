@@ -33,18 +33,29 @@ class MyWebServer(SocketServer.BaseRequestHandler):
         self.data = self.request.recv(1024).strip()
         new_request = self.data.split()
         url = new_request[1]
-	print url
+
         #denfense the hack!
         if "../" in url:
             self.request.sendall("HTTP/1.1 404 Bad Request\n")
             return
         #check the url
+	
         if url == '/':
-            new_file = os.getcwd() + "/www/index.html"    
+            new_file = os.getcwd() + "/www/index.html"   
+	elif url[-1] == 'p':
+
+	    new_file = os.getcwd() + "/www" + url + "/index.html"
+	 
+
         elif url[0] == '/' and url[-1] == '/':
+            
             new_file = os.getcwd() + "/www" + url + "index.html"
+        elif 'css' in url and 'deep' in url:
+	    new_file = os.getcwd() + "/www/deep/deep.css"
         else:
+	    
             new_file = os.getcwd() + "/www" + url
+	    
         local_path = os.path.normpath(new_file)
         #get the content of page
         try:
