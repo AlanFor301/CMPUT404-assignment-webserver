@@ -1,7 +1,7 @@
 import SocketServer, os
 # coding: utf-8
 
-# Copyright 2013 Abram Hindle, Eddie Antonio Santos
+# Copyright 2016 Qiang Yu 2013 Abram Hindle, Eddie Antonio Santos
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ class MyWebServer(SocketServer.BaseRequestHandler):
         self.data = self.request.recv(1024).strip()
         new_request = self.data.split()
         url = new_request[1]
+	print url
         #denfense the hack!
         if "../" in url:
             self.request.sendall("HTTP/1.1 404 Bad Request\n")
@@ -50,7 +51,7 @@ class MyWebServer(SocketServer.BaseRequestHandler):
             read_file = open(local_path, "r")
             content_type = new_file.split(".")[-1]
         #make a header
-            http_header = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/" + content_type + "; charset=UTF-8\r\n"
+            http_header = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/" + content_type +"; charset=UTF-8\r\n"
         #make the body
             http_content = read_file.read()
             http_content_len = "Content-Length:" +str(len(http_content)) + "\n"
